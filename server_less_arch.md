@@ -78,3 +78,4 @@ This component is a depoyed function in OpenFaaS and manage `MDF`.
 
 ## MDF
 This component receives RTP packet from senders and relay them to other clients.
+**TODO**: document why this component can't be implemented as an OpenFaaS function
