@@ -8,7 +8,12 @@ There are various scenarios for a push-to-talk (PTT) application, as specified b
 
 ## Design Constraints
 
-The timing for mission-critical systems is defined in (**TODO**: the KPI doc on Gitlab -- 600ms from ingress to egress). Therefore we need a fast, scalable, and responsive design. The following design considerations are introduced to address the aforementioned KPIs.
+The timing for mission-critical systems is defined in section **6.15** of **3GPP TS 22.179 version 14.3.0**. There are two main KPI in that document, one for PTT access time (KPI 1) and other for mouth-to-ear latency (KPI 3). 
+The MCPTT Access time (KPI 1) is defined as the time between when an MCPTT User request to speak (normally by pressing the MCPTT control on the MCPTT UE) and when this user gets a signal to start speaking. This time does not include confirmations from receiving users. The Mouth-to-ear latency (KPI 3) is the time between an utterance by the transmitting user, and the playback of the utterance at the receiving user's speaker. The following figure illustrates the KPI 1 and KPI 3.
+
+
+
+Therefore we need a fast, scalable, and responsive design. The following design considerations are introduced to address the aforementioned KPIs.
 
 ## Design Consideration
 
