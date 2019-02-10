@@ -13,6 +13,26 @@ There are various scenarios for a push-to-talk (PTT) application, as specified b
 - MCPTT emergency private calls (as specified in subclause 10.7.2.4); and
 - MCPTT emergency alerts (as specified in subclause 10.6.2.6.3).
 
+## Architecture Evolution History
+
+We started with Rust to have both high performance and memory safety, as Rust is known to have a strict type-system that mitigates many programming bugs that lead to memory vulnerabilities in languages such as C/C++. For lower response time in accessing the data, we needed an in-memory data grid. Due to lack of any enterprise-grade library of in-memory data grids for Rust, we moved to C/C++. Other languages were not chosen because of C/C++'s performance superiority. **TODO**: maybe we need a more solid argument on choosing C.
+
+Based on a false comparison between Hazelcast's and Apache Ignite's performance, we moved on with Hazelcast. However, we realized later the falseness of the comparison based on https://www.gridgain.com/resources/blog/gridgain-confirms-apache-ignite-performance-2x-faster-hazelcast and https://dzone.com/articles/benchmarking-data-grids-apache. **TODO**: Apache Ignite vs. Hazelcase comparison table.
+
+To have individual component scalability, loose coupling among components, and component reusability, we chose OpenFaaS as a function as a service platform. **TODO**: complete the following table to compare OpenFaaS vs. Google RPC vs. Containerization
+
+
+| Solution        | OpenFaaS                 | Google RPC  | Containerization (coarser-grained than function-level decomposition) |
+| :------------- |:-------------| :-----| :-----|
+| Performance (function call overhead)++ | 1-10 ms **TODO**: what determines if it's 1, 10, or something in between? | 26 us | ? |
+| Scalability  | Function with high load will automatically be replicated to distribute the load.      |   Individual function's scalability not possible (**TODO**: possible via look-ahead load balancer?) | ? |
+| Readily compatible with K8s? | Yes      |    ? | ? |
+| **what else?** | ?      |    ? | ? |
+
+
+++ : The measured performance is on a single machine (underlying network's latency is not impacting the reported number).
+
+**TODO**: frequently update this section as we move on.
 
 ## Design Constraints
 
@@ -29,6 +49,10 @@ Therefore we need a fast, scalable, and responsive design. The following design 
 - developing each component independently, seperate team, framework or programming language --> microservice
 - loosly couple. --> ingress and egress proxies are used to make the internal components independent of the protocol, which is currently SIP.
 - low latency.
+- high availability --> **TODO**: any pattern other than microservice arch used to address this concern?
+- fault-tolerance --> **TODO**: any pattern other than microservice arch used to address this concern?
+
+Companies like Ericsson are also moving towards microservice architecture to implement network functions: https://www.ericsson.com/en/blog/2019/1/are-cloud-native-design-really-needed-in-telecom?utm_source=twitter&utm_medium=social_organic&utm_campaign=BDGS_Cloud_native_design_podcast_Global_11012019&utm_content=&hootPostID=8d345465e6872464434b4507a7369714
 
 ## Architecture Overview
 In the following architecture we use gateway pattern to seperate internal message format from SIP message format. The `Request Proxy` convert SIP requests to protobuf messages and all internall components work with protobuf messages. Protocol buffer have libraries in many languages so we can use any programming language for each component.
