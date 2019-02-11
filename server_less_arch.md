@@ -116,3 +116,6 @@ This component is a depoyed function in OpenFaaS and manage `MDF`.
 
 ## MDF
 This component receives RTP packet from senders and relay them to other clients. Because this component should handle many RTP streams we couldn't encapsulate this component as a function in OpenFaaS. OpenFaaS functions are docker images that contain binaries with predefined input and output ports.
+
+# Resources
+[From Webscale to Telco, the Cloud Native Journey](https://5g-ppp.eu/wp-content/uploads/2018/07/5GPPP-Software-Network-WG-White-Paper-23052018-V5.pdf)
