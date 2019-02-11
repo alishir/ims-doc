@@ -74,13 +74,13 @@ to minimize the message passing overhead. According to the [developer tweet](htt
 
 ## Architecture Components
 
-## Why OpenFaaS?
+## Why OpenFaaS and in-memory data grid?
 
-**TODO**: elaborate the reason: the ease of debugging and higher targeted scalability (scale only the bottleneck func) compared to containers. + briefly saying what is openfaas
+Using [microservice architecture is a trend in telecom industries](https://www.kau.se/files/2017-11/Migrating%20a%20monolithic%20Telecom%20Application%20to%20Microservice%20Architecture%20on%20Google%20Kubernetes.pdf).
 
-## Why Data Grid?
+There exists two type of services In a microservice architecture, stateful and stateless services. In order to support high availability we store states in external storage, in-memory data grid. We counld't use persistent storage because we require low latency access to the data.
 
-**TODO**: elaborate the reason: micro components should be fail-safe => should not keep state in memory => disk should be used but DBMSes are slow => data grid + briefly saying what is data grid
+In order to developing manageable and scalable services we are going to use Function as a Service. OpenFaaS is the most popular FaaS implementation.
 
 ## Request Proxy
 This component receive requests from IMS. After parsing the request it serialized the request to protobuf message and call appropriated function via `Function Gateway`.
