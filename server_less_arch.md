@@ -88,7 +88,7 @@ This component receive requests from IMS. After parsing the request it serialize
 ## Function Gateway
 This components acts as a gateway for available functions in OpenFaaS infrastructure. Read official documents about this component [here](https://github.com/openfaas/faas/tree/master/gateway)
 
-**TODO**: elaborate the following: any function needs to be called via Function Gateway, as required by OpenFaaS. Therefore there's an arrow from Function Gateway to all other components (why not Media Handler??). the dashed arrow denotes that a component needs to call another's component's functions indirectly via Function Gateway.
+Any function needs to be called via Function Gateway, as required by OpenFaaS. Therefore there's an arrow from Function Gateway to all other components, MediaHandler is a internal function that used by other function. The MediaHandler is not accessible for external entities. The dashed arrow denotes that a component needs to call another's component's functions indirectly via Function Gateway.
 
 ## Register Handler
 This component is a depoyed function in OpenFaaS that handles UE registerations. `Function Gateway` call this function on receving REGISTER request from `Request Proxy`.
