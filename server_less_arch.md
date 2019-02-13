@@ -18,12 +18,13 @@ There are various scenarios for a push-to-talk (PTT) application, as specified b
 We started with Rust to have both high performance and memory safety, as Rust is known to have a strict type-system that mitigates many programming bugs that lead to memory vulnerabilities in languages such as C/C++. For lower response time in accessing the data, we needed an in-memory data grid. Due to lack of any enterprise-grade library of in-memory data grids for Rust, we moved to C/C++. Other languages were not chosen because of C/C++'s performance superiority. Other languages such as go, python and java, uses garbage collection mechanism. Garbage collector add some uncertainity and we couldn't measure latency of processing request precisely. **TODO**: maybe we need a more solid argument on choosing C.
 
 ### Programming Languages Comparison
-|   | Community  | Performance  | Concurrency  | Memory Safe  |
-|:-:|:-:|:-:|:-:|:-:|
-| Go  | :heavy\_check\_mark:   | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :x:   |
-| Erlang  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  |
-| Rust  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :heavy\_check\_mark:  |
-| Haskell  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  |
+|   | Community  | Performance  | Concurrency  | Memory Safe  | Third-party Libs |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| Go  | :heavy\_check\_mark:   | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :x: | :heavy\_check\_mark: |
+| Erlang  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  | :x: |
+| Rust  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :x: |
+| Haskell  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  | :x: |
+| C/C++| :heavy\_check\_mark: | :heavy\_check\_mark: | third-party libraries | :x: | :heavy\_check\_mark: |
 
 Based on a false comparison between Hazelcast's and Apache Ignite's performance, we moved on with Hazelcast. However, we realized later the falseness of the comparison based on https://www.gridgain.com/resources/blog/gridgain-confirms-apache-ignite-performance-2x-faster-hazelcast and https://dzone.com/articles/benchmarking-data-grids-apache. **TODO**: Apache Ignite vs. Hazelcase comparison table.
 
