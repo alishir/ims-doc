@@ -118,4 +118,9 @@ This component is a depoyed function in OpenFaaS and manage `MDF`.
 This component receives RTP packet from senders and relay them to other clients. Because this component should handle many RTP streams we couldn't encapsulate this component as a function in OpenFaaS. OpenFaaS functions are docker images that contain binaries with predefined input and output ports.
 
 # Resources
-[From Webscale to Telco, the Cloud Native Journey](https://5g-ppp.eu/wp-content/uploads/2018/07/5GPPP-Software-Network-WG-White-Paper-23052018-V5.pdf)
+[From Webscale to Telco, the Cloud Native Journey. 3GPP](https://5g-ppp.eu/wp-content/uploads/2018/07/5GPPP-Software-Network-WG-White-Paper-23052018-V5.pdf)
+From the abstract:
+The shift from the cloud ready to cloud native, from VM to container, from MANO to Kubernetes, etc is a must have to avoid the risk that 5G remains a niche connectivity gap-filler largely ignored by cloud applications and services boom. 
+
+[Using microservices at Ericsson](https://www.ericsson.com/en/blog/2019/1/are-cloud-native-design-really-needed-in-telecom?utm_source=twitter&utm_medium=social_organic&utm_campaign=BDGS_Cloud_native_design_podcast_Global_11012019&utm_content=&hootPostID=8d345465e6872464434b4507a7369714)
+
