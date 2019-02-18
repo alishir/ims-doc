@@ -78,9 +78,11 @@ to minimize the message passing overhead. According to the [developer tweet](htt
 
 Using [microservice architecture is a trend in telecom industries](https://www.kau.se/files/2017-11/Migrating%20a%20monolithic%20Telecom%20Application%20to%20Microservice%20Architecture%20on%20Google%20Kubernetes.pdf).
 
-There exists two type of services In a microservice architecture, stateful and stateless services. In order to support high availability we store states in external storage, in-memory data grid. We counld't use persistent storage because we require low latency access to the data.
+There exists two type of services In a microservice architecture, stateful and stateless services. In order to support high availability we store states in external storage, in-memory data grid. We counld't use persistent storage (e.g. a disk drive) because we require **low latency access** to the data.
 
-In order to developing manageable and scalable services we are going to use Function as a Service. OpenFaaS is the most popular FaaS implementation.
+An in-memory data grid stores data on a cluster's main memory. To handle consistent data storage on a cluster, we use [Apache Ignite's clustering features](https://apacheignite.readme.io/docs/clustering).
+
+In order to developing manageable and scalable services we are going to use Function as a Service. OpenFaaS is the most popular FaaS implementation. **Update**: OpenFaaS was replaced with Google RPC after some investigations, as described in section Architecture Evolution History.
 
 ## Request Proxy
 This component receive requests from IMS. After parsing the request it serialized the request to protobuf message and call appropriated function via `Function Gateway`.
