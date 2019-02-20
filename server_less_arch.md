@@ -73,7 +73,7 @@ An overview to the MCPTT app's architecture is depicted in the figure below. It 
 
 ![overview](./img/mcptt-overview.png)
 
-The MCPTT box in the figure above can be further broken down into the components depicted in the following figure.
+The MCPTT box in the figure above can be further broken down into the components depicted in the following figure. **TODO**: update the figure as GRPC has replaced OpenFaaS.
 
 ![architecture](./img/serverless_arch.png)
 
