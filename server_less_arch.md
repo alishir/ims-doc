@@ -17,6 +17,15 @@ There are various scenarios for a push-to-talk (PTT) application, as specified b
 
 We started with Rust to have both high performance and memory safety, as Rust is known to have a strict type-system that mitigates many programming bugs that lead to memory vulnerabilities in languages such as C/C++. For lower response time in accessing the data, we needed an in-memory data grid. Due to lack of any enterprise-grade library of in-memory data grids for Rust, we moved to C/C++. Other languages were not chosen because of C/C++'s performance superiority. Other languages such as go, python and java, uses garbage collection mechanism. Garbage collector add some uncertainity and we couldn't measure latency of processing request precisely. **TODO**: maybe we need a more solid argument on choosing C.
 
+### Choice of Programming Language
+| Language  | Community  | Performance  | Concurrency  | Memory Safe  | Third-party Libs |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| Go  | :heavy\_check\_mark:   | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :x: | :heavy\_check\_mark: |
+| Erlang  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  | :x: |
+| Rust  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :heavy\_check\_mark:  | :x: |
+| Haskell  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  | :x: |
+| C/C++| :heavy\_check\_mark: | :heavy\_check\_mark: | third-party libraries | :x: | :heavy\_check\_mark: |
+
 Based on a false comparison between Hazelcast's and Apache Ignite's performance, we moved on with Hazelcast. However, we realized later the falseness of the comparison based on https://www.gridgain.com/resources/blog/gridgain-confirms-apache-ignite-performance-2x-faster-hazelcast and https://dzone.com/articles/benchmarking-data-grids-apache. **TODO**: Apache Ignite vs. Hazelcase comparison table.
 
 To have individual component scalability, loose coupling among components, and component reusability, we chose OpenFaaS as a function as a service platform. **TODO**: complete the following table to compare OpenFaaS vs. Google RPC vs. Containerization
@@ -27,6 +36,7 @@ To have individual component scalability, loose coupling among components, and c
 | Performance (function call overhead)++ | 1-10 ms **TODO**: what determines if it's 1, 10, or something in between? | 26 us | ? |
 | Scalability  | Function with high load will automatically be replicated to distribute the load.      |   Individual function's scalability not possible (**TODO**: possible via look-ahead load balancer?) | ? |
 | Readily compatible with K8s? | Yes      |    ? | ? |
+| Automatic Service Discovery | Yes      |    No | No |
 | **what else?** | ?      |    ? | ? |
 
 
