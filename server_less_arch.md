@@ -26,7 +26,7 @@ We started with Rust to have both high performance and memory safety, as Rust is
 | Haskell  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  | :x: |
 | C/C++| :heavy\_check\_mark: | :heavy\_check\_mark: | third-party libraries | :x: | :heavy\_check\_mark: |
 
-We go with C++ version 14+. We use ![Facebook Folly](https://github.com/facebook/folly) and ![Boost](https://www.boost.org/) as high-performance third-party libraries to implement common operations such as use of vectors.
+We go with C++ version 14+. We use [Facebook Folly](https://github.com/facebook/folly) and [Boost](https://www.boost.org/) as high-performance third-party libraries to implement common operations such as use of vectors.
 
 ### Choice of In-memory Data Grid
 Based on a false comparison between Hazelcast's and Apache Ignite's performance, we moved on with Hazelcast. However, we realized later the falseness of the comparison based on https://www.gridgain.com/resources/blog/gridgain-confirms-apache-ignite-performance-2x-faster-hazelcast and https://dzone.com/articles/benchmarking-data-grids-apache. **TODO**: Apache Ignite vs. Hazelcase comparison table.
