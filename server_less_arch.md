@@ -15,6 +15,8 @@ There are various scenarios for a push-to-talk (PTT) application, as specified b
 
 ## Architecture Evolution History
 
+[3GPP TS 23.379](www.3gpp.org/DynaReport/23379.htm) titled "Functional architecture and information flows to support Mission Critical Push To Talk" inspired the architecture.
+
 ### Choice of Programming Language
 We started with Rust to have both high performance and memory safety, as Rust is known to have a strict type-system that mitigates many programming bugs that lead to memory vulnerabilities in languages such as C/C++. For lower response time in accessing the data, we needed an in-memory data grid. Due to lack of any enterprise-grade library of in-memory data grids for Rust, we moved to C/C++. Other languages were not chosen because of C/C++'s performance superiority. Other languages such as Go, Python, Java, JavaScript, and C# use garbage collection mechanism. Garbage collector adds some uncertainity and we couldn't measure latency of processing request precisely. **TODO**: maybe we need a more solid argument on choosing C.
 
@@ -45,6 +47,14 @@ To have individual component scalability, loose coupling among components, and c
 
 
 ++ : The measured performance is on a single machine (underlying network's latency is not impacting the reported number).
+
+### Choice of Microservice Architectural Pattern
+
+Microservice arch. is easier to manage and maintain even for a team of one --> smaller code bases --> fewer segmentation faults
+
+The data management problem with microservice arch.
+
+MySQL database clusterer in CNCF landscape
 
 **TODO**: frequently update this section as we move on.
 
