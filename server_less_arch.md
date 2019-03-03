@@ -52,7 +52,7 @@ To have individual component scalability, loose coupling among components, and c
 
 Microservice arch. is easier to manage and maintain even for a team of one --> smaller code bases --> fewer segmentation faults
 
-The data management problem with microservice arch.
+The data management problem with microservice arch. --> according to the book "Migrating to microservice databases", a shared table is the easiest solution to the problem.
 
 MySQL database clusterer in CNCF landscape
 
