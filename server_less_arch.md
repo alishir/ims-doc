@@ -2,9 +2,12 @@
 
 ## Introduction
 
-This document captures the general architecture of the MCPTT app, including design decisions, architecture overview, and a brief overview to each architectural component.
+This document captures the general architecture of the MCPTT app, including
+design decisions, architecture overview, and a brief overview to each
+architectural component.
 
-There are various scenarios for a push-to-talk (PTT) application, as specified by ETSI in **3GPP TS 23.379 version 14.7.0**. The most useful scenarios are: 
+There are various scenarios for a push-to-talk (PTT) application, as specified
+by ETSI in **3GPP TS 23.379 version 14.7.0**. The most useful scenarios are: 
 
 - Group calls (as specified in subclause 10.6.2.3 and subclause 10.6.2.4);
 - Private calls (as specified in subclause 10.7.2.2 and subclause 10.7.2.3);
@@ -15,10 +18,21 @@ There are various scenarios for a push-to-talk (PTT) application, as specified b
 
 ## Architecture Evolution History
 
-[3GPP TS 23.379](www.3gpp.org/DynaReport/23379.htm) titled "Functional architecture and information flows to support Mission Critical Push To Talk" inspired the architecture.
+[3GPP TS 23.379](www.3gpp.org/DynaReport/23379.htm) titled "Functional
+architecture and information flows to support Mission Critical Push To Talk"
+inspired the architecture.
 
 ### Choice of Programming Language
-We started with Rust to have both high performance and memory safety, as Rust is known to have a strict type-system that mitigates many programming bugs that lead to memory vulnerabilities in languages such as C/C++. For lower response time in accessing the data, we needed an in-memory data grid. Due to lack of any enterprise-grade library of in-memory data grids for Rust, we moved to C/C++. Other languages were not chosen because of C/C++'s performance superiority. Other languages such as Go, Python, Java, JavaScript, and C# use garbage collection mechanism. Garbage collector adds some uncertainity and we couldn't measure latency of processing request precisely. **TODO**: maybe we need a more solid argument on choosing C.
+We started with Rust to have both high performance and memory safety, as Rust
+is known to have a strict type-system that mitigates many programming bugs that
+lead to memory vulnerabilities in languages such as C/C++. For lower response
+time in accessing the data, we needed an in-memory data grid. Due to lack of
+any enterprise-grade library of in-memory data grids for Rust, we moved to
+C/C++. Other languages were not chosen because of C/C++'s performance
+superiority. Other languages such as Go, Python, Java, JavaScript, and C# use
+garbage collection mechanism. Garbage collector adds some uncertainity and we
+couldn't measure latency of processing request precisely. **TODO**: maybe we
+need a more solid argument on choosing C.
 
 | Language  | Community  | Performance  | Concurrency  | Memory Safe  | Third-party Libs |
 |:-:|:-:|:-:|:-:|:-:|:-:|
@@ -28,13 +42,24 @@ We started with Rust to have both high performance and memory safety, as Rust is
 | Haskell  | :x:  | :x:  | :heavy\_check\_mark:  | :x:  | :x: |
 | C/C++| :heavy\_check\_mark: | :heavy\_check\_mark: | third-party libraries | :x: | :heavy\_check\_mark: |
 
-We go with C++ version 14+. We use [Facebook Folly](https://github.com/facebook/folly) and [Boost](https://www.boost.org/) as high-performance third-party libraries to implement common operations such as use of vectors.
+We go with C++ version 14+. We use [Facebook
+Folly](https://github.com/facebook/folly) and [Boost](https://www.boost.org/)
+as high-performance third-party libraries to implement common operations such
+as use of vectors.
 
 ### Choice of In-memory Data Grid
-Based on a false comparison between Hazelcast's and Apache Ignite's performance, we moved on with Hazelcast. However, we realized later the falseness of the comparison based on https://www.gridgain.com/resources/blog/gridgain-confirms-apache-ignite-performance-2x-faster-hazelcast and https://dzone.com/articles/benchmarking-data-grids-apache. **TODO**: Apache Ignite vs. Hazelcase comparison table.
+Based on a false comparison between Hazelcast's and Apache Ignite's
+performance, we moved on with Hazelcast. However, we realized later the
+falseness of the comparison based on
+https://www.gridgain.com/resources/blog/gridgain-confirms-apache-ignite-performance-2x-faster-hazelcast
+and https://dzone.com/articles/benchmarking-data-grids-apache. **TODO**: Apache
+Ignite vs. Hazelcase comparison table.
 
 ### Choice of Execution Model
-To have individual component scalability, loose coupling among components, and component reusability, we chose OpenFaaS as a function as a service platform. **TODO**: complete the following table to compare OpenFaaS vs. Google RPC vs. Containerization
+To have individual component scalability, loose coupling among components, and
+component reusability, we chose OpenFaaS as a function as a service platform.
+**TODO**: complete the following table to compare OpenFaaS vs. Google RPC vs.
+Containerization
 
 
 | Solution        | OpenFaaS                 | Google RPC  | Containerization (coarser-grained than function-level decomposition) |
@@ -46,13 +71,17 @@ To have individual component scalability, loose coupling among components, and c
 | **what else?** | ?      |    ? | ? |
 
 
-++ : The measured performance is on a single machine (underlying network's latency is not impacting the reported number).
+++ : The measured performance is on a single machine (underlying network's
+latency is not impacting the reported number).
 
 ### Choice of Microservice Architectural Pattern
 
-Microservice arch. is easier to manage and maintain even for a team of one --> smaller code bases --> fewer segmentation faults
+Microservice arch. is easier to manage and maintain even for a team of one -->
+smaller code bases --> fewer segmentation faults
 
-The data management problem with microservice arch. --> according to the book "Migrating to microservice databases", a shared table is the easiest solution to the problem.
+The data management problem with microservice arch. --> according to the book
+"Migrating to microservice databases", a shared table is the easiest solution
+to the problem.
 
 MySQL database clusterer in CNCF landscape
 
@@ -60,12 +89,21 @@ MySQL database clusterer in CNCF landscape
 
 ## Design Constraints
 
-The timing for mission-critical systems is defined in section **6.15** of **3GPP TS 22.179 version 14.3.0**. There are two main KPI in that document, one for PTT access time (KPI 1) and other for mouth-to-ear latency (KPI 3). 
-The MCPTT Access time (KPI 1) is defined as the time between when an MCPTT User request to speak (normally by pressing the MCPTT control on the MCPTT UE) and when this user gets a signal to start speaking. This time does not include confirmations from receiving users. The Mouth-to-ear latency (KPI 3) is the time between an utterance by the transmitting user, and the playback of the utterance at the receiving user's speaker. The following figure illustrates the KPI 1 and KPI 3.
+The timing for mission-critical systems is defined in section **6.15** of
+**3GPP TS 22.179 version 14.3.0**. There are two main KPI in that document, one
+for PTT access time (KPI 1) and other for mouth-to-ear latency (KPI 3).  The
+MCPTT Access time (KPI 1) is defined as the time between when an MCPTT User
+request to speak (normally by pressing the MCPTT control on the MCPTT UE) and
+when this user gets a signal to start speaking. This time does not include
+confirmations from receiving users. The Mouth-to-ear latency (KPI 3) is the
+time between an utterance by the transmitting user, and the playback of the
+utterance at the receiving user's speaker. The following figure illustrates the
+KPI 1 and KPI 3.
 
 ![KPI1_KPI3](./img/kpi1_kpi3.jpg)
 
-Therefore we need a fast, scalable, and responsive design. The following design considerations are introduced to address the aforementioned KPIs.
+Therefore we need a fast, scalable, and responsive design. The following design
+considerations are introduced to address the aforementioned KPIs.
 
 ## Design Consideration
 
