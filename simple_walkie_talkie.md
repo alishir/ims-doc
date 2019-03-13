@@ -40,6 +40,7 @@ first section describes list of tasks related to implementing simple messaging s
 ## Simple Messaging Service
 According to section 10.6.2.3 in **TS 23.379** MCPTT clients could initiate group call by sending group call request to MCPTT server. Following is the signaling steps of pre-arranged group call:
 ![pre-arranged-group-call](./img/group_call.jpg)
+*Ali **guesses** that there are two options when establishing an MCPTT session: i) waiting for all clients to join then starting the session, and ii) starting the session as soon as the first client joins.*
 
 As shown in the figure the MCPTT server should receive request from client, process the request and then transmit some other request to other clients. So the MCPTT server should do some messaging tasks.
 
@@ -50,6 +51,8 @@ Here is the list of tasks that MCPTT server should do:
 3. Transmit new requests to other clients
 
 **NOTE**: Request is simple text message in this section, in the next section we handle SIP requests.
+
+**NOTE**: Having multiple groups is not supported at the moment.
 
 ## Handling SIP Requests
 In the previous section we described simple messaging service required by MCPTT service. In this section we describe more realistic scenario.
