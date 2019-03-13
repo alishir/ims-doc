@@ -41,12 +41,13 @@ need a more solid argument on choosing C.
 | Rust     | :heavy\_check\_mark: | :heavy\_check\_mark:       | :heavy\_check\_mark:  | :heavy\_check\_mark: | :x:                  |
 | Haskell  | :x:                  | :x:                        | :heavy\_check\_mark:  | :x:                  | :x:                  |
 | C/C++    | :heavy_check_mark:   | :heavy_check_mark:         | Third-party libraries | :x:                  | :heavy_check_mark:   |
-| Java     | :heavy_check_mark:   | Custom JVM for low latency | :heavy_check_mark:    | :heavy_check_mark:   | :heavy_check_mark:   |
+| Java     | :heavy_check_mark:   | Custom JVM for [low latency](https://news.ycombinator.com/item?id=18729822) | :heavy_check_mark:    | :heavy_check_mark:   | :heavy_check_mark:   |
 
 We go with C++ version 14+. We use [FacebookFolly](https://github.com/facebook/folly) and [Boost](https://www.boost.org/)
-
 as high-performance third-party libraries to implement common operations such
 as use of vectors.
+
+**TODO**: add LMAX arch. hints to develop high throughput Java apps (and its alternative in C++ and that it hasn't been updated for 4 years), add commercial options for fast garbage collection in Java
 
 ### Choice of In-memory Data Grid
 
@@ -75,6 +76,8 @@ Containerization
 ++ : The measured performance is on a single machine (underlying network's
 latency is not impacting the reported number).
 
+**TODO**: reference relavant gRPC links from Resources
+
 ### Choice of Microservice Architectural Pattern
 
 Microservice arch. is easier to manage and maintain even for a team of one --> smaller code bases --> fewer segmentation faults
@@ -84,6 +87,8 @@ The data management problem with microservice arch. --> according to the book "M
 MySQL database clusterer in CNCF landscape
 
 **TODO**: frequently update this section as we move on.
+
+**TODO**: we moved back from microservices to monolithic design because of: i) the need to have a centralized DB, ii) the unnecessary performance penalty in using microservices, and iii) having no strong justification for using microservices.
 
 ## Design Constraints
 
