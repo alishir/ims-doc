@@ -1,4 +1,4 @@
-# Rust Experiences
+# Rust Experiences (---- MERGED WITH REDMINE. DO NOT EDIT ANYMORE. ----)
 
 ## Introduction
 
