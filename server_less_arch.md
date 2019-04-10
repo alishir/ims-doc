@@ -1,4 +1,4 @@
-# Serverless Architecture
+# Serverless Architecture (---- MERGED WITH REDMINE. DO NOT EDIT ANYMORE. ----)
 
 ## Introduction
 
