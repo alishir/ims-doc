@@ -4,7 +4,7 @@
 | Ali Shirvani  |  0.1 | November 11, 2018  |  init commit |   |
 
 
-# MCPTT 1:1 task list
+# MCPTT 1:1 task list (---- MERGED WITH REDMINE. DO NOT EDIT ANYMORE. ----)
 
 In this document we enumerate steps toward producing simple walkie-talkie system. The system architecture is based on the architecture that described in section 7.3 of **TS 23.179**.
 
